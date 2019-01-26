@@ -1,0 +1,21 @@
+{
+  "name": "satchel",
+  "sources": {
+    "dir": "src",
+    "subdirs": true
+  },
+  "bs-dependencies": ["reason-react", "bs-css", "bs-axios", "bs-webapi"],
+  "reason": {
+    "react-jsx": 2
+  },
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "warnings": {
+    "error": "+101"
+  },
+  "namespace": true,
+  "refmt": 3
+}
