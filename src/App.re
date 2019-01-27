@@ -1,6 +1,18 @@
 open Utils;
 open Container;
 
+module Styles = {
+  open Css;
+
+  let wrapper =
+    style([
+      flex(1),
+      padding(1.0->rem),
+      backgroundColor(black),
+      color(white),
+    ]);
+};
+
 let component = ReasonReact.statelessComponent("App");
 
 let make = _ => {
@@ -20,8 +32,6 @@ let make = _ => {
         ->Option.getWithDefault(container)
       );
 
-    <main className={Css.style([Css.flex(1), Css.margin(1.0->Css.rem)])}>
-      <Inventory container />
-    </main>;
+    <main className=Styles.wrapper> <InventoryList container /> </main>;
   },
 };
