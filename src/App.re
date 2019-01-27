@@ -9,9 +9,9 @@ let make = _ => {
     let initialContainer = createContainerFromScratch(~h=5, ~w=12);
 
     let items = [
-      (Database.theOneRing, (NonNegativeInt(1), NonNegativeInt(0))),
-      (Database.anduril, (NonNegativeInt(2), NonNegativeInt(0))),
-      (Database.sting, (NonNegativeInt(0), NonNegativeInt(0))),
+      (Db.theOneRing, (NonNegativeInt(1), NonNegativeInt(0))),
+      (Db.anduril, (NonNegativeInt(2), NonNegativeInt(0))),
+      (Db.sting, (NonNegativeInt(0), NonNegativeInt(0))),
     ];
 
     let inventory =
