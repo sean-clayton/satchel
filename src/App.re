@@ -5,21 +5,32 @@ let component = ReasonReact.statelessComponent("App");
 
 let make = _ => {
   ...component,
-  didMount: _self => {
-    let container =
-      tryToAddItemToContainer(
-        ~item=Database.sting,
-        ~container=createContainerFromScratch(~h=5, ~w=5),
-        ~coords=(NonNegativeInt(0), NonNegativeInt(0)),
-      )
-      ->Option.getWithDefault(defaultContainer);
+  render: _self => {
+    let initialContainer = createContainerFromScratch(~h=5, ~w=12);
 
-    canAddItemToContainerAtCoords(
-      ~item=Database.anduril,
-      ~container,
-      ~coords=(NonNegativeInt(0), NonNegativeInt(0)),
-    )
-    ->Js.log;
+    let items = [
+      (Database.theOneRing, (NonNegativeInt(1), NonNegativeInt(0))),
+      (Database.anduril, (NonNegativeInt(2), NonNegativeInt(0))),
+      (Database.sting, (NonNegativeInt(0), NonNegativeInt(0))),
+    ];
+
+    let inventory =
+      items->List.reduce(initialContainer, (container, (item, coords)) =>
+        tryToAddItemToContainer(~item, ~container, ~coords)
+        ->Option.getWithDefault(container)
+      );
+
+    let items =
+      inventory.items
+      ->List.toArray
+      ->Array.map(item => {
+          let Items.ItemId(id) = item.item.id;
+          <li key=id> {text(item.item.name)} </li>;
+        });
+
+    <main className={Css.style([Css.flex(1), Css.margin(1.0->Css.rem)])}>
+      <h1> "Inventory:"->text </h1>
+      <ul> items->ReasonReact.array </ul>
+    </main>;
   },
-  render: _self => <main> <h1> {ReasonReact.string("Howdy!")} </h1> </main>,
 };

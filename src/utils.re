@@ -1,5 +1,7 @@
 include Belt;
 
+let text = ReasonReact.string;
+
 type nonNegativeInt =
   | NonNegativeInt(int);
 

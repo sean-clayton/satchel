@@ -5,6 +5,9 @@ type itemId =
 
 let createItemId = () => Uuid.v4()->ItemId;
 
+type itemImage =
+  | ItemImage(string);
+
 type weaponKind =
   | Sword
   | Dagger
@@ -14,13 +17,14 @@ type weapon =
   | OneHanded(weaponKind)
   | TwoHanded(weaponKind);
 
-type armor =
+type apparel =
   | Chestpiece
   | Boots
   | Legs
   | Helmet
   | Gloves
-  | Belt;
+  | Belt
+  | Ring;
 
 type consumable =
   | Food
@@ -43,7 +47,7 @@ type rarity =
 
 type kind =
   | Weapon(weapon)
-  | Armor(armor)
+  | Apparel(apparel)
   | Consumable(consumable)
   | Readable(readable)
   | Container(container)
@@ -53,6 +57,7 @@ type item = {
   id: itemId,
   name: string,
   description: string,
+  image: itemImage,
   kind,
   rarity,
   size,
@@ -62,27 +67,30 @@ let defaultItem = {
   id: ItemId("__DEFAULT_ITEM_ID__"),
   name: "__DEFAULT_ITEM__",
   description: "__DEFAULT_ITEM__",
+  image: ItemImage(""),
   kind: DefaultItem,
   rarity: Common,
   size: (PositiveInt(1), PositiveInt(1)),
 };
 
-let createItem = (~name, ~description, ~rarity, ~size, ~kind) => {
+let createItem = (~name, ~description, ~image, ~rarity, ~size, ~kind) => {
   id: createItemId(),
   kind,
   name,
   description,
+  image,
   rarity,
   size,
 };
 
 let createItemFromScratch =
-    (~name, ~description, ~rarity, ~sizeH, ~sizeW, ~kind) => {
+    (~name, ~description, ~image, ~rarity, ~sizeH, ~sizeW, ~kind) => {
   switch (createPositiveInt(sizeH), createPositiveInt(sizeW)) {
   | (Some(h), Some(w)) => {
       id: createItemId(),
       name,
       description,
+      image,
       rarity,
       size: createSize(~h, ~w),
       kind,
