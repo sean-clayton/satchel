@@ -52,12 +52,23 @@ type container =
   | Backpack
   | Box;
 
-type rarity =
-  | Common
-  | Uncommon
-  | Rare
-  | Legendary
-  | Exotic;
+module Rarity = {
+  type t =
+    | Common
+    | Uncommon
+    | Rare
+    | Epic
+    | Legendary;
+
+  let toString = rarity =>
+    switch (rarity) {
+    | Common => "Common"
+    | Uncommon => "Uncommon"
+    | Rare => "Rare"
+    | Epic => "Epic"
+    | Legendary => "Legendary"
+    };
+};
 
 type kind =
   | Weapon(weapon)
@@ -73,7 +84,7 @@ type item = {
   description: string,
   image: ItemImage.t,
   kind,
-  rarity,
+  rarity: Rarity.t,
   size: Size.t,
 };
 

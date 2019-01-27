@@ -20,6 +20,7 @@ let make = _ => {
   render: _self => {
     let items = [
       (Db.theOneRing, (1, 0)),
+      (Db.morgulBlade, (3, 0)),
       (Db.anduril, (2, 0)),
       (Db.sting, (0, 0)),
     ];
@@ -38,6 +39,7 @@ let make = _ => {
           "https://web.poecdn.com/image/Art/2DItems/Weapons/TwoHandWeapons/TwoHandSwords/TwoHandSword3.png",
           "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/OneHandSwords/OneHandSword4.png",
           "https://web.poecdn.com/image/Art/2DItems/Rings/Ring4.png",
+          "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/Daggers/Dagger8.png",
         ]>
         ...<InventoryList container />
       </AssetLoader>

@@ -21,7 +21,7 @@ let sting = {
     ItemImage.make(
       "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/OneHandSwords/OneHandSword4.png",
     ),
-  rarity: Exotic,
+  rarity: Epic,
   kind: Weapon(OneHanded(ShortSword)),
   size: (2, 1),
 };
@@ -39,6 +39,19 @@ let theOneRing = {
   size: (1, 1),
 };
 
-let predefinedItems = [sting, anduril, theOneRing];
+let morgulBlade = {
+  id: createItemId(),
+  name: "Morgul Blade",
+  description: "A magical and poisonous dagger.",
+  image:
+    ItemImage.make(
+      "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/Daggers/Dagger8.png",
+    ),
+  rarity: Rare,
+  kind: Weapon(OneHanded(Dagger)),
+  size: (2, 1),
+};
+
+let predefinedItems = [sting, anduril, theOneRing, morgulBlade];
 
 let backpack: Container.container = {size: (5, 1), items: []};
