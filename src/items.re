@@ -12,8 +12,15 @@ module ItemId: {
 
 let createItemId = () => Uuid.v4()->ItemId.make;
 
-type itemImage =
-  | ItemImage(string);
+module ItemImage: {
+  type t;
+  let make: string => t;
+  let toString: t => string;
+} = {
+  type t = string;
+  let make = string => string;
+  let toString = t => t;
+};
 
 type weaponKind =
   | Sword
@@ -64,7 +71,7 @@ type item = {
   id: ItemId.t,
   name: string,
   description: string,
-  image: itemImage,
+  image: ItemImage.t,
   kind,
   rarity,
   size,
@@ -74,7 +81,7 @@ let defaultItem = {
   id: ItemId.make("__DEFAULT_ITEM_ID__"),
   name: "__DEFAULT_ITEM__",
   description: "__DEFAULT_ITEM__",
-  image: ItemImage(""),
+  image: ItemImage.make(""),
   kind: DefaultItem,
   rarity: Common,
   size: (PositiveInt(1), PositiveInt(1)),
