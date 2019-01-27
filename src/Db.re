@@ -1,4 +1,3 @@
-open Utils;
 open Items;
 
 let anduril = {
@@ -11,7 +10,7 @@ let anduril = {
     ),
   rarity: Legendary,
   kind: Weapon(TwoHanded(Sword)),
-  size: (PositiveInt(4), PositiveInt(2)),
+  size: (4, 2),
 };
 
 let sting = {
@@ -24,7 +23,7 @@ let sting = {
     ),
   rarity: Exotic,
   kind: Weapon(OneHanded(ShortSword)),
-  size: (PositiveInt(2), PositiveInt(1)),
+  size: (2, 1),
 };
 
 let theOneRing = {
@@ -37,12 +36,9 @@ let theOneRing = {
     ),
   rarity: Legendary,
   kind: Apparel(Ring),
-  size: (PositiveInt(1), PositiveInt(1)),
+  size: (1, 1),
 };
 
 let predefinedItems = [sting, anduril, theOneRing];
 
-let backpack: Container.container = {
-  size: (PositiveInt(5), PositiveInt(12)),
-  items: [],
-};
+let backpack: Container.container = {size: (5, 1), items: []};

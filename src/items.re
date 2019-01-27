@@ -74,7 +74,7 @@ type item = {
   image: ItemImage.t,
   kind,
   rarity,
-  size,
+  size: Size.t,
 };
 
 let defaultItem = {
@@ -84,7 +84,7 @@ let defaultItem = {
   image: ItemImage.make(""),
   kind: DefaultItem,
   rarity: Common,
-  size: (PositiveInt(1), PositiveInt(1)),
+  size: (1, 1),
 };
 
 let createItem = (~name, ~description, ~image, ~rarity, ~size, ~kind) => {
@@ -99,14 +99,14 @@ let createItem = (~name, ~description, ~image, ~rarity, ~size, ~kind) => {
 
 let createItemFromScratch =
     (~name, ~description, ~image, ~rarity, ~sizeH, ~sizeW, ~kind) => {
-  switch (createPositiveInt(sizeH), createPositiveInt(sizeW)) {
+  switch (PositiveInt.make(sizeH), PositiveInt.make(sizeW)) {
   | (Some(h), Some(w)) => {
       id: createItemId(),
       name,
       description,
       image,
       rarity,
-      size: createSize(~h, ~w),
+      size: Size.make(~h, ~w),
       kind,
     }
   | _ => defaultItem

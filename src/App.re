@@ -6,13 +6,13 @@ let component = ReasonReact.statelessComponent("App");
 let make = _ => {
   ...component,
   render: _self => {
-    let initialContainer = createContainerFromScratch(~h=5, ~w=12);
-
     let items = [
-      (Db.theOneRing, (NonNegativeInt(1), NonNegativeInt(0))),
-      (Db.anduril, (NonNegativeInt(2), NonNegativeInt(0))),
-      (Db.sting, (NonNegativeInt(0), NonNegativeInt(0))),
+      (Db.theOneRing, (1, 0)),
+      (Db.anduril, (2, 0)),
+      (Db.sting, (0, 0)),
     ];
+
+    let initialContainer = createContainerFromScratch(~h=5, ~w=12);
 
     let container =
       items->List.reduce(initialContainer, (container, (item, coords)) =>

@@ -2,59 +2,45 @@ include Belt;
 
 let text = ReasonReact.string;
 
-type nonNegativeInt =
-  | NonNegativeInt(int);
+module NonNegativeInt = {
+  type t = int;
+  let make = (num): option(t) =>
+    switch (num) {
+    | x when x >= 0 => Some(x)
+    | _ => None
+    };
+  let toInt = (num: t): int => num;
+};
 
-let createNonNegativeInt = number => {
-  switch (number) {
-  | x when x >= 0 => Some(NonNegativeInt(x))
-  | _ => None
+module PositiveInt = {
+  type t = int;
+  let make = (num): option(t) =>
+    switch (num) {
+    | x when x > 0 => Some(x)
+    | _ => None
+    };
+  let toInt = (num: t): int => num;
+};
+
+module Coords = {
+  type t = (NonNegativeInt.t, NonNegativeInt.t);
+  let make = (~x: NonNegativeInt.t, ~y: NonNegativeInt.t): t => (x, y);
+  let toIntTuple = ((x: NonNegativeInt.t, y: NonNegativeInt.t)) => (
+    NonNegativeInt.toInt(x),
+    NonNegativeInt.toInt(y),
+  );
+};
+
+module Size = {
+  type t = (PositiveInt.t, PositiveInt.t);
+  let make = (~h: PositiveInt.t, ~w: PositiveInt.t): t => (h, w);
+  let toIntTuple = ((h: PositiveInt.t, y: PositiveInt.t)) => (
+    PositiveInt.toInt(h),
+    PositiveInt.toInt(y),
+  );
+  let area = (size: t) => {
+    let (h, w) = toIntTuple(size);
+
+    h * w;
   };
-};
-
-let intFromNonNegativeInt = nonNegativeInt => {
-  switch (nonNegativeInt) {
-  | NonNegativeInt(i) => i
-  };
-};
-
-type positiveInt =
-  | PositiveInt(int);
-
-let createPositiveInt = number => {
-  switch (number) {
-  | x when x > 0 => Some(PositiveInt(x))
-  | _ => None
-  };
-};
-
-let intFromPositiveInt = positiveInt => {
-  switch (positiveInt) {
-  | PositiveInt(i) => i
-  };
-};
-
-type coords = (nonNegativeInt, nonNegativeInt);
-
-let createCoords = (x: nonNegativeInt, y: nonNegativeInt) => (x, y);
-
-let coordsToInts = (coords: coords) => {
-  let (x, y) = coords;
-  (intFromNonNegativeInt(x), intFromNonNegativeInt(y));
-};
-
-type size = (positiveInt, positiveInt);
-
-let createSize = (~h: positiveInt, ~w: positiveInt): size => (h, w);
-
-let sizeToInts = (size: size) => {
-  let (h, w) = size;
-  (intFromPositiveInt(h), intFromPositiveInt(w));
-};
-
-let areaFromSize = (size: size) => {
-  let (h, w) = size;
-  let (h, w) = (intFromPositiveInt(h), intFromPositiveInt(w));
-
-  h * w;
 };
