@@ -1,4 +1,5 @@
 open Utils;
+open Items;
 
 type placedItem = {
   item: Items.item,
@@ -6,12 +7,23 @@ type placedItem = {
 };
 
 type container = {
-  size: (positiveInt, positiveInt),
+  size,
   items: list(placedItem),
 };
 
-let canAddItemToContainerAtCoords = (item, container, coords) => {
-  let itemSizeInts = item.item.size->sizeToInts;
+let defaultContainer = {size: (PositiveInt(1), PositiveInt(1)), items: []};
+
+let createContainer = size => {size, items: []};
+
+let createContainerFromScratch = (~w, ~h) => {
+  switch (createPositiveInt(h), createPositiveInt(w)) {
+  | (Some(h), Some(w)) => {size: createSize(~h, ~w), items: []}
+  | _ => defaultContainer
+  };
+};
+
+let canAddItemToContainerAtCoords = (~item: item, ~container, ~coords) => {
+  let itemSizeInts = item.size->sizeToInts;
   let containerSizeInts = container.size->sizeToInts;
   let coordsInts = coords->coordsToInts;
 
@@ -32,7 +44,13 @@ let canAddItemToContainerAtCoords = (item, container, coords) => {
   };
 };
 
-let addItemToContainer = (item, container, coords) => {
-  ...container,
-  items: [{item, origin: coords}, ...container.items],
+let tryToAddItemToContainer = (~item, ~container, ~coords) => {
+  switch (canAddItemToContainerAtCoords(~item, ~container, ~coords)) {
+  | true =>
+    Some({
+      ...container,
+      items: container.items->List.add({item, origin: coords}),
+    })
+  | _ => None
+  };
 };

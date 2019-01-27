@@ -7,7 +7,8 @@ let createItemId = () => Uuid.v4()->ItemId;
 
 type weaponKind =
   | Sword
-  | Dagger;
+  | Dagger
+  | ShortSword;
 
 type weapon =
   | OneHanded(weaponKind)
@@ -45,7 +46,8 @@ type kind =
   | Armor(armor)
   | Consumable(consumable)
   | Readable(readable)
-  | Container(container);
+  | Container(container)
+  | DefaultItem;
 
 type item = {
   id: itemId,
@@ -56,6 +58,15 @@ type item = {
   size,
 };
 
+let defaultItem = {
+  id: ItemId("__DEFAULT_ITEM_ID__"),
+  name: "__DEFAULT_ITEM__",
+  description: "__DEFAULT_ITEM__",
+  kind: DefaultItem,
+  rarity: Common,
+  size: (PositiveInt(1), PositiveInt(1)),
+};
+
 let createItem = (~name, ~description, ~rarity, ~size, ~kind) => {
   id: createItemId(),
   kind,
@@ -63,4 +74,19 @@ let createItem = (~name, ~description, ~rarity, ~size, ~kind) => {
   description,
   rarity,
   size,
+};
+
+let createItemFromScratch =
+    (~name, ~description, ~rarity, ~sizeH, ~sizeW, ~kind) => {
+  switch (createPositiveInt(sizeH), createPositiveInt(sizeW)) {
+  | (Some(h), Some(w)) => {
+      id: createItemId(),
+      name,
+      description,
+      rarity,
+      size: createSize(~h, ~w),
+      kind,
+    }
+  | _ => defaultItem
+  };
 };

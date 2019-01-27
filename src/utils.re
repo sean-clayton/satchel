@@ -34,12 +34,16 @@ let intFromPositiveInt = positiveInt => {
 
 type coords = (nonNegativeInt, nonNegativeInt);
 
+let createCoords = (x: nonNegativeInt, y: nonNegativeInt) => (x, y);
+
 let coordsToInts = (coords: coords) => {
   let (x, y) = coords;
   (intFromNonNegativeInt(x), intFromNonNegativeInt(y));
 };
 
 type size = (positiveInt, positiveInt);
+
+let createSize = (~h: positiveInt, ~w: positiveInt): size => (h, w);
 
 let sizeToInts = (size: size) => {
   let (h, w) = size;
@@ -51,14 +55,4 @@ let areaFromSize = (size: size) => {
   let (h, w) = (intFromPositiveInt(h), intFromPositiveInt(w));
 
   h * w;
-};
-
-let createCoords = (x, y) => {
-  let x = createNonNegativeInt(x);
-  let y = createNonNegativeInt(y);
-
-  switch (x, y) {
-  | (Some(x), Some(y)) => Some((x, y): coords)
-  | _ => None
-  };
 };
