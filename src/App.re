@@ -32,6 +32,18 @@ let make = _ => {
         ->Option.getWithDefault(container)
       );
 
-    <main className=Styles.wrapper> <InventoryList container /> </main>;
+    <main className=Styles.wrapper>
+      <AssetLoader
+        sounds=[
+          "https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg",
+        ]
+        images=[
+          "https://web.poecdn.com/image/Art/2DItems/Weapons/TwoHandWeapons/TwoHandSwords/TwoHandSword3.png",
+          "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/OneHandSwords/OneHandSword4.png",
+          "https://web.poecdn.com/image/Art/2DItems/Rings/Ring4.png",
+        ]>
+        ...<InventoryList container />
+      </AssetLoader>
+    </main>;
   },
 };
