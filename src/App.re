@@ -19,16 +19,14 @@ let make = _ => {
   ...component,
   render: _self => {
     let items = [
-      (Db.theOneRing, (1, 0)),
-      (Db.morgulBlade, (3, 0)),
+      (Db.theOneRing, (0, 0)),
+      (Db.morgulBlade, (0, 1)),
       (Db.anduril, (2, 0)),
-      (Db.sting, (0, 0)),
+      (Db.sting, (1, 0)),
     ];
 
-    let initialContainer = createContainerFromScratch(~h=5, ~w=12);
-
     let container =
-      items->List.reduce(initialContainer, (container, (item, coords)) =>
+      items->List.reduce(Db.backpack, (container, (item, coords)) =>
         tryToAddItemToContainer(~item, ~container, ~coords)
         ->Option.getWithDefault(container)
       );

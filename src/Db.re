@@ -54,4 +54,4 @@ let morgulBlade = {
 
 let predefinedItems = [sting, anduril, theOneRing, morgulBlade];
 
-let backpack: Container.container = {size: (5, 1), items: []};
+let backpack: Container.container = {size: (5, 12), items: []};

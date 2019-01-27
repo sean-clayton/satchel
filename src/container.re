@@ -27,10 +27,12 @@ let canAddItemToContainerAtCoords = (~item: item, ~container, ~coords) => {
   let containerSizeInts = container.size->Size.toIntTuple;
   let coordsInts = coords->Coords.toIntTuple;
 
-  switch (itemSizeInts, containerSizeInts, container.items) {
-  | ((itemH, _), (containerH, _), _) when itemH > containerH => false
-  | ((_, itemW), (_, containerW), _) when itemW > containerW => false
-  | (_, _, items) =>
+  switch (itemSizeInts, containerSizeInts, coordsInts, container.items) {
+  | ((itemH, _), (containerH, _), _, _) when itemH > containerH => false
+  | ((_, itemW), (_, containerW), _, _) when itemW > containerW => false
+  | ((iH, _), (cH, _), (_, y), _) when cH < iH + y => false
+  | ((_, iW), (_, cW), (x, _), _) when cW < iW + x => false
+  | (_, _, _, items) =>
     items->List.every(({origin, item: {size}}) => {
       let (minX, minY) = origin->Coords.toIntTuple;
       let (h, w) = size->Size.toIntTuple;
