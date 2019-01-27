@@ -23,20 +23,21 @@ let createContainerFromScratch = (~w, ~h) => {
 };
 
 let canAddItemToContainerAtCoords = (~item: item, ~container, ~coords) => {
-  let itemSizeInts = item.size->Size.toIntTuple;
-  let containerSizeInts = container.size->Size.toIntTuple;
-  let coordsInts = coords->Coords.toIntTuple;
-
-  switch (itemSizeInts, containerSizeInts, coordsInts, container.items) {
+  switch (
+    item.size->Size.toIntTuple,
+    container.size->Size.toIntTuple,
+    coords->Coords.toIntTuple,
+    container.items,
+  ) {
   | ((itemH, _), (containerH, _), _, _) when itemH > containerH => false
   | ((_, itemW), (_, containerW), _, _) when itemW > containerW => false
   | ((iH, _), (cH, _), (_, y), _) when cH < iH + y => false
   | ((_, iW), (_, cW), (x, _), _) when cW < iW + x => false
-  | (_, _, _, items) =>
+  | (_, _, coords, items) =>
     items->List.every(({origin, item: {size}}) => {
       let (minX, minY) = origin->Coords.toIntTuple;
       let (h, w) = size->Size.toIntTuple;
-      switch (coordsInts, (minX, minX + w), (minY, minY + h)) {
+      switch (coords, (minX, minX + w), (minY, minY + h)) {
       | ((x, y), (minX, maxX), (minY, maxY))
           when x >= minX && y >= minY && x < maxX && y < maxY =>
         false
