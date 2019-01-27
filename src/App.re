@@ -34,9 +34,6 @@ let make = _ => {
 
     <main className=Styles.wrapper>
       <AssetLoader
-        sounds=[
-          "https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg",
-        ]
         images=[
           "https://web.poecdn.com/image/Art/2DItems/Weapons/TwoHandWeapons/TwoHandSwords/TwoHandSword3.png",
           "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/OneHandSwords/OneHandSword4.png",

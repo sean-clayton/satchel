@@ -13,7 +13,7 @@ type actions =
 
 let component = ReasonReact.reducerComponent("ImageLoader");
 
-let make = (~images: list(string), ~sounds: list(string), children) => {
+let make = (~images=[], ~sounds=[], children) => {
   ...component,
   initialState: () => {numLoaded: 0},
   reducer: (action, state) => {
