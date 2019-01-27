@@ -1,9 +1,16 @@
 open Utils;
 
-type itemId =
-  | ItemId(string);
+module ItemId: {
+  type t;
+  let make: string => t;
+  let toString: t => string;
+} = {
+  type t = string;
+  let make = string => string;
+  let toString = t => t;
+};
 
-let createItemId = () => Uuid.v4()->ItemId;
+let createItemId = () => Uuid.v4()->ItemId.make;
 
 type itemImage =
   | ItemImage(string);
@@ -54,7 +61,7 @@ type kind =
   | DefaultItem;
 
 type item = {
-  id: itemId,
+  id: ItemId.t,
   name: string,
   description: string,
   image: itemImage,
@@ -64,7 +71,7 @@ type item = {
 };
 
 let defaultItem = {
-  id: ItemId("__DEFAULT_ITEM_ID__"),
+  id: ItemId.make("__DEFAULT_ITEM_ID__"),
   name: "__DEFAULT_ITEM__",
   description: "__DEFAULT_ITEM__",
   image: ItemImage(""),

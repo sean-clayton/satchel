@@ -1,5 +1,6 @@
 open Utils;
 open Container;
+open Items;
 
 let component = ReasonReact.statelessComponent("App");
 
@@ -23,10 +24,9 @@ let make = _ => {
     let items =
       inventory.items
       ->List.toArray
-      ->Array.map(item => {
-          let Items.ItemId(id) = item.item.id;
-          <li key=id> {text(item.item.name)} </li>;
-        });
+      ->Array.map(({item}) =>
+          <li key={item.id->ItemId.toString}> {text(item.name)} </li>
+        );
 
     <main className={Css.style([Css.flex(1), Css.margin(1.0->Css.rem)])}>
       <h1> "Inventory:"->text </h1>
