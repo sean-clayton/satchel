@@ -50,10 +50,10 @@ let canAddItemToContainerAtCoords = (~item: item, ~container, ~coords) => {
 let tryToAddItemToContainer = (~item, ~container, ~coords) => {
   switch (canAddItemToContainerAtCoords(~item, ~container, ~coords)) {
   | true =>
-    Some({
+    Result.Ok({
       ...container,
       items: container.items->List.add({item, origin: coords}),
     })
-  | _ => None
+  | _ => Result.Error(("Could not add item to container", container))
   };
 };

@@ -28,7 +28,7 @@ let make = _ => {
     let container =
       items->List.reduce(Db.backpack, (container, (item, coords)) =>
         tryToAddItemToContainer(~item, ~container, ~coords)
-        ->Option.getWithDefault(container)
+        ->Result.getWithDefault(container)
       );
 
     <main className=Styles.wrapper>
