@@ -6,11 +6,26 @@ module Styles = {
 
   let wrapper =
     style([
+      display(flexBox),
       flex(1),
       padding(1.0->rem),
       backgroundColor(black),
       color(white),
     ]);
+
+  let content =
+    style([
+      display(grid),
+      flex(1),
+      unsafe("grid-template-areas", {|
+        "inventory form"
+      |}),
+      gridTemplateColumns([1.0->fr, 1.0->fr]),
+    ]);
+
+  let inventory = style([unsafe("grid-area", "inventory")]);
+
+  let form = style([unsafe("grid-area", "form")]);
 };
 
 let component = ReasonReact.statelessComponent("App");
@@ -35,15 +50,14 @@ let make = _ => {
     let items = container.items;
 
     <main className=Styles.wrapper>
-      <AssetLoader
-        images=[
-          "https://web.poecdn.com/image/Art/2DItems/Weapons/TwoHandWeapons/TwoHandSwords/TwoHandSword3.png",
-          "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/OneHandSwords/OneHandSword4.png",
-          "https://web.poecdn.com/image/Art/2DItems/Rings/Ring4.png",
-          "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/Daggers/Dagger8.png",
-          "https://web.poecdn.com/image/Art/2DItems/Armours/BodyArmours/BodyStr1A.png",
-        ]>
-        ...<div> <h1> "Inventory:"->text </h1> <InventoryList items /> </div>
+      <AssetLoader images=Db.preloadImages>
+        ...<div className=Styles.content>
+             <div className=Styles.inventory>
+               <h1> "Inventory:"->text </h1>
+               <InventoryList items />
+             </div>
+             <div className=Styles.form> <ItemCreator /> </div>
+           </div>
       </AssetLoader>
     </main>;
   },
