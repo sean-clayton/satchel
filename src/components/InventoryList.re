@@ -1,5 +1,4 @@
 open Utils;
-open Container;
 open Items;
 
 module Styles = {
@@ -16,7 +15,7 @@ let make = (~items, _children) => {
     <ul className=Styles.wrapper>
       {items
        ->List.toArray
-       ->Array.map(({item}) =>
+       ->Array.map(item =>
            <li key={item.id->ItemId.toString}> <InventoryItem item /> </li>
          )
        ->ReasonReact.array}

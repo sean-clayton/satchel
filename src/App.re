@@ -47,7 +47,7 @@ let make = _ => {
         ->Result.getWithDefault(container)
       );
 
-    let items = container.items;
+    let items = container.items->List.map(i => i.item);
 
     <main className=Styles.wrapper>
       <AssetLoader images=Db.preloadImages>

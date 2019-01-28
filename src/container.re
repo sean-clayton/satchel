@@ -35,10 +35,10 @@ let canAddItemToContainerAtCoords = (~item: item, ~container, ~coords) => {
   | ((_, iW), (_, cW), (x, _), _) when cW < iW + x => false
   | ((itemAH, itemAW), _, coords, items) =>
     items->List.every(({origin, item: {size}}) => {
-      let (minXA, minYA) = coords->Coords.toIntTuple;
+      let (minXA, minYA) = coords;
       let (maxXA, maxYA) = (minXA + itemAW, minYA + itemAH);
-      let (itemBH, itemBW) = size->Size.toIntTuple;
-      let (minXB, minYB) = origin->Coords.toIntTuple;
+      let (itemBH, itemBW) = size;
+      let (minXB, minYB) = origin;
       let (maxXB, maxYB) = (minXB + itemBW, minYB + itemBH);
 
       /*

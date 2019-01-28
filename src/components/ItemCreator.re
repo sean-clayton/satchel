@@ -154,7 +154,7 @@ let make = _children => {
         </label>
         <button> "Create Item"->text </button>
       </form>
-      <ul />
+      <InventoryList items={self.state.items} />
     </div>;
   },
 };
