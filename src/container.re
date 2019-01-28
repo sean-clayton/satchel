@@ -33,16 +33,21 @@ let canAddItemToContainerAtCoords = (~item: item, ~container, ~coords) => {
   | ((_, itemW), (_, containerW), _, _) when itemW > containerW => false
   | ((iH, _), (cH, _), (_, y), _) when cH < iH + y => false
   | ((_, iW), (_, cW), (x, _), _) when cW < iW + x => false
-  | (_, _, coords, items) =>
+  | ((itemAH, itemAW), _, coords, items) =>
     items->List.every(({origin, item: {size}}) => {
-      let (minX, minY) = origin->Coords.toIntTuple;
-      let (h, w) = size->Size.toIntTuple;
-      switch (coords, (minX, minX + w), (minY, minY + h)) {
-      | ((x, y), (minX, maxX), (minY, maxY))
-          when x >= minX && y >= minY && x < maxX && y < maxY =>
-        false
-      | _ => true
-      };
+      let (minXA, minYA) = coords->Coords.toIntTuple;
+      let (maxXA, maxYA) = (minXA + itemAW, minYA + itemAH);
+      let (itemBH, itemBW) = size->Size.toIntTuple;
+      let (minXB, minYB) = origin->Coords.toIntTuple;
+      let (maxXB, maxYB) = (minXB + itemBW, minYB + itemBH);
+
+      /*
+        2d rectangle collision detection
+        Shamlessly copy/pasted from:
+        https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#Axis-Aligned_Bounding_Box
+       */
+
+      !(minXA < maxXB && maxXA > minXB && minYA < maxYB && maxYA > minYB);
     })
   };
 };

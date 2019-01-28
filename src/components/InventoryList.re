@@ -10,19 +10,16 @@ module Styles = {
 
 let component = ReasonReact.statelessComponent("InventoryList");
 
-let make = (~container, _children) => {
+let make = (~items, _children) => {
   ...component,
   render: _self => {
-    <div>
-      <h1> "Inventory:"->text </h1>
-      <ul className=Styles.wrapper>
-        {container.items
-         ->List.toArray
-         ->Array.map(({item}) =>
-             <li key={item.id->ItemId.toString}> <InventoryItem item /> </li>
-           )
-         ->ReasonReact.array}
-      </ul>
-    </div>;
+    <ul className=Styles.wrapper>
+      {items
+       ->List.toArray
+       ->Array.map(({item}) =>
+           <li key={item.id->ItemId.toString}> <InventoryItem item /> </li>
+         )
+       ->ReasonReact.array}
+    </ul>;
   },
 };

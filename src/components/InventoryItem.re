@@ -5,16 +5,22 @@ module Styles = {
   open Css;
   open Theme;
 
-  let title =
-    style([
-      fontSize(24->px),
-      textShadow(~x=zero, ~y=2->px, ~blur=4->px, rgba(0, 0, 0, 0.75)),
-    ]);
+  let title = rarity =>
+    style([color(Colors.rarity(rarity)), fontSize(24->px)]);
 
   let description = style([]);
 
   let image = rarity =>
-    style([padding(13->px), backgroundColor(Colors.rarity(rarity))]);
+    style([
+      boxShadow(
+        ~inset=true,
+        ~x=zero,
+        ~y=zero,
+        ~spread=3->px,
+        Colors.rarity(rarity),
+      ),
+      padding(13->px),
+    ]);
 };
 
 let component = ReasonReact.statelessComponent("InventoryItem");
@@ -23,7 +29,7 @@ let make = (~item, _children) => {
   ...component,
   render: _self => {
     <div>
-      <p className=Styles.title> item.name->text </p>
+      <p className={Styles.title(item.rarity)}> item.name->text </p>
       <p> {item.rarity->Rarity.toString->text} </p>
       <p className=Styles.description> <em> item.description->text </em> </p>
       <img

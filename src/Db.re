@@ -16,14 +16,14 @@ let anduril = {
 let sting = {
   id: createItemId(),
   name: "Sting",
-  description: "A short sword that glows when orcs or goblins are nearby.",
+  description: "A small sword, not much larger than a dagger, that glows when orcs or goblins are nearby.",
   image:
     ItemImage.make(
       "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/OneHandSwords/OneHandSword4.png",
     ),
   rarity: Epic,
   kind: Weapon(OneHanded(ShortSword)),
-  size: (2, 1),
+  size: (3, 2),
 };
 
 let theOneRing = {
@@ -49,9 +49,28 @@ let morgulBlade = {
     ),
   rarity: Rare,
   kind: Weapon(OneHanded(Dagger)),
-  size: (2, 1),
+  size: (3, 1),
 };
 
-let predefinedItems = [sting, anduril, theOneRing, morgulBlade];
+let urukHaiChestPiece = {
+  id: createItemId(),
+  name: "Uruk Hai Chestpiece",
+  description: "Body armor worn by the Uruk Hai of Isengard.",
+  image:
+    ItemImage.make(
+      "https://web.poecdn.com/image/Art/2DItems/Armours/BodyArmours/BodyStr1A.png",
+    ),
+  rarity: Uncommon,
+  kind: Apparel(Chestpiece),
+  size: (3, 2),
+};
 
-let backpack: Container.container = {size: (5, 12), items: []};
+let predefinedItems = [
+  sting,
+  anduril,
+  theOneRing,
+  morgulBlade,
+  urukHaiChestPiece,
+];
+
+let backpack: Container.container = {size: (20, 20), items: []};

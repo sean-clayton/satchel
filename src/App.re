@@ -22,7 +22,8 @@ let make = _ => {
       (Db.theOneRing, (0, 0)),
       (Db.morgulBlade, (0, 1)),
       (Db.anduril, (2, 0)),
-      (Db.sting, (1, 0)),
+      (Db.sting, (4, 0)),
+      (Db.urukHaiChestPiece, (6, 0)),
     ];
 
     let container =
@@ -31,6 +32,8 @@ let make = _ => {
         ->Result.getWithDefault(container)
       );
 
+    let items = container.items;
+
     <main className=Styles.wrapper>
       <AssetLoader
         images=[
@@ -38,8 +41,9 @@ let make = _ => {
           "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/OneHandSwords/OneHandSword4.png",
           "https://web.poecdn.com/image/Art/2DItems/Rings/Ring4.png",
           "https://web.poecdn.com/image/Art/2DItems/Weapons/OneHandWeapons/Daggers/Dagger8.png",
+          "https://web.poecdn.com/image/Art/2DItems/Armours/BodyArmours/BodyStr1A.png",
         ]>
-        ...<InventoryList container />
+        ...<div> <h1> "Inventory:"->text </h1> <InventoryList items /> </div>
       </AssetLoader>
     </main>;
   },
