@@ -85,18 +85,17 @@ let make = _children => {
         | _ => Rarity.Common
         };
 
-      send(
-        AddItem(
-          createItem(
-            ~name,
-            ~description,
-            ~rarity,
-            ~kind=Weapon(OneHanded(Sword)),
-            ~size,
-            ~image,
-          ),
-        ),
-      );
+      let item =
+        createItem(
+          ~name,
+          ~description,
+          ~rarity,
+          ~kind=Weapon(OneHanded(Sword)),
+          ~size,
+          ~image,
+        );
+
+      send(AddItem(item));
 
       form##reset();
     };
