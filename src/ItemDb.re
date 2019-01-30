@@ -66,10 +66,10 @@ let urukHaiChestPiece = {
 };
 
 let predefinedItems = [
-  sting,
-  anduril,
   theOneRing,
   morgulBlade,
+  anduril,
+  sting,
   urukHaiChestPiece,
 ];
 
@@ -350,4 +350,5 @@ let preloadImages = [
   "https://web.poecdn.com/image/Art/2DItems/Armours/Helmets/HelmetStrInt7.png",
   "https://web.poecdn.com/image/Art/2DItems/Armours/Helmets/HelmetStrInt8.png",
   "https://web.poecdn.com/image/Art/2DItems/Armours/Helmets/HelmetStrInt9.png",
+  "https://web.poecdn.com/image/Art/2DItems/Rings/Ring4.png",
 ];

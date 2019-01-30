@@ -33,24 +33,18 @@ let component = ReasonReact.statelessComponent("App");
 let make = _ => {
   ...component,
   render: _self => {
-    let items = [
-      (Db.theOneRing, (0, 0)),
-      (Db.morgulBlade, (0, 1)),
-      (Db.anduril, (2, 0)),
-      (Db.sting, (4, 0)),
-      (Db.urukHaiChestPiece, (6, 0)),
-    ];
-
     let container =
-      items->List.reduce(Db.backpack, (container, (item, coords)) =>
-        tryToAddItemToContainer(~item, ~container, ~coords)
-        ->Result.getWithDefault(container)
-      );
+      ItemDb.predefinedItems
+      ->List.zip([(0, 0), (0, 1), (2, 0), (4, 0), (6, 0)])
+      ->List.reduce(ItemDb.backpack, (container, (item, coords)) =>
+          tryToAddItemToContainer(~item, ~container, ~coords)
+          ->Result.getWithDefault(container)
+        );
 
     let items = container.items->List.map(i => i.item);
 
     <main className=Styles.wrapper>
-      <AssetLoader images=Db.preloadImages>
+      <AssetLoader images=ItemDb.preloadImages>
         ...<div className=Styles.content>
              <div className=Styles.inventory>
                <h1> "Inventory:"->text </h1>
