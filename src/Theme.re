@@ -1,13 +1,22 @@
-open Css;
-open Items;
+open Items.Rarity;
+open Styles.Functions;
 
 module Colors = {
-  let rarity = (rarity: Rarity.t) =>
+  type t =
+    | Black
+    | White;
+
+  let rarityRgbTuple = rarity =>
     switch (rarity) {
-    | Common => "a2a0a1"->hex
-    | Uncommon => "09fd03"->hex
-    | Rare => "0099ff"->hex
-    | Epic => "9500f9"->hex
-    | Legendary => "ffe002"->hex
+    | Common => (162, 160, 161)
+    | Uncommon => (9, 253, 3)
+    | Rare => (0, 119, 255)
+    | Epic => (255, 28, 174)
+    | Legendary => (255, 224, 2)
     };
+
+  let rarityAlpha = (rarity, alpha) =>
+    rarityRgbTuple(rarity)->rgbToRgba(alpha);
+
+  let rarity = rarity => rarityAlpha(rarity, 1.);
 };

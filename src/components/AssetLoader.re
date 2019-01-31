@@ -41,7 +41,7 @@ module Styles = {
       height(100.0->pct),
       width(100.0->pct),
       left(zero),
-      backgroundColor("07f"->hex),
+      backgroundColor("F0C131"->hex),
       boxShadow(~inset=true, ~y=1->px, rgba(255, 255, 255, 0.5)),
       borderRadius(9999->px),
     ]);
@@ -69,7 +69,7 @@ let make = (~images=[], ~sounds=[], children) => {
     };
   },
   render: self => {
-    let onLoad = _ => self.send(LoadedAsset);
+    let assetLoadComplete = _ => self.send(LoadedAsset);
     let numTotalAssets = List.concat(images, sounds)->List.length;
 
     let progressf =
@@ -93,13 +93,19 @@ let make = (~images=[], ~sounds=[], children) => {
         {sounds
          ->List.toArray
          ->Array.map(sound =>
-             <audio key=sound src=sound onCanPlayThrough=onLoad />
+             <audio key=sound src=sound onCanPlayThrough=assetLoadComplete />
            )
          ->ReasonReact.array}
         {images
          ->List.toArray
          ->Array.map(image =>
-             <img className=Styles.hiddenAsset key=image src=image onLoad />
+             <img
+               className=Styles.hiddenAsset
+               key=image
+               src=image
+               onLoad=assetLoadComplete
+               onError=assetLoadComplete
+             />
            )
          ->ReasonReact.array}
       </div>

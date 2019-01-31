@@ -127,7 +127,12 @@ let make = _children => {
         </label>
         <label className=Styles.label>
           "Image URL"->text
-          <input name="image" id="image" required=true />
+          <select name="image">
+            {Items.preloadImages
+             ->List.toArray
+             ->Array.map(id => <option key=id value=id> id->text </option>)
+             ->ReasonReact.array}
+          </select>
         </label>
         <label className=Styles.label>
           "Height"->text

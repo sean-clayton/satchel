@@ -4,7 +4,7 @@
   "scripts": {
     "build:fresh": "yarn clean && yarn build",
     "build": "yarn parcel build src/index.html --public-url / --detailed-report --experimental-scope-hoisting",
-    "start": "yarn parcel src/index.html --public-url / --open",
+    "start": "yarn parcel src/index.html --public-url / --open --port 3000",
     "test": "echo \"lol\" && exit 1",
     "clean": "rimraf dist"
   },
