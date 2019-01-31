@@ -48,7 +48,12 @@ let make = _ => {
     let items = container.items->List.map(i => i.item);
 
     <main className=Styles.wrapper>
-      <AssetLoader images=Items.preloadImages>
+      <AssetLoader
+        images={
+          Items.preloadImages
+          ->List.map(Items.ItemImage.make)
+          ->List.map(Items.ItemImage.toString)
+        }>
         ...<div className=Styles.content>
              <div className=Styles.inventory>
                <h1> "Inventory:"->text </h1>
