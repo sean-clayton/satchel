@@ -8,36 +8,51 @@ module Styles = {
 
   let label =
     style([
+      flex(1),
       display(flexBox),
       flexDirection(column),
       marginBottom(1.0->rem),
     ]);
 
   let description = style([unsafe("resize", "vertical")]);
+
+  let imagePickerContainer =
+    style([maxHeight((128 * 4)->px), overflowY(scroll)]);
 };
 
-type state = {items: list(Items.item)};
+type state = {
+  items: list(Items.item),
+  selectedItemImage: Items.ItemImage.t,
+};
 
 type actions =
   | AddItem(Items.item)
-  | RemoveItem(Items.item);
+  | RemoveItem(Items.item)
+  | SelectItemImage(Items.ItemImage.t)
+  | ResetForm;
 
 let component = ReasonReact.reducerComponent("ItemCreator");
 
 let make = _children => {
   ...component,
-  initialState: () => {items: []},
+  initialState: () => {items: [], selectedItemImage: defaultItem.image},
   reducer: (action, state) => {
     switch (action) {
     | AddItem(item) =>
-      ReasonReact.Update({items: state.items->List.add(item)})
+      ReasonReact.Update({...state, items: state.items->List.add(item)})
     | RemoveItem(item) =>
       ReasonReact.Update({
+        ...state,
         items: state.items->List.keep(i => i.id !== item.id),
       })
+    | SelectItemImage(image) =>
+      ReasonReact.Update({...state, selectedItemImage: image})
+    | ResetForm =>
+      ReasonReact.Update({...state, selectedItemImage: defaultItem.image})
     };
   },
   render: self => {
+    let handleNewImage = image => self.send(SelectItemImage(image));
     let handleSubmit = (e, {ReasonReact.send}) => {
       e->ReactEvent.Form.preventDefault;
       let form = e->ReactEvent.Form.target;
@@ -46,34 +61,28 @@ let make = _children => {
       let name =
         switch (elements##name##value->Js.Undefined.toOption) {
         | Some(string) => string
-        | None => "__DEFAULT_ITEM__"
+        | None => Items.defaultItem.name
         };
 
       let description =
         switch (elements##description##value->Js.Undefined.toOption) {
         | Some(string) => string
-        | None => "__DEFAULT_ITEM__"
+        | None => Items.defaultItem.description
         };
 
-      let image =
-        switch (elements##image##value->Js.Undefined.toOption) {
-        | Some(string) => string->ItemImage.make
-        | None => ""->ItemImage.make
-        };
+      let (dH, dW) = Items.defaultItem.size;
 
-      let h =
-        switch (elements##height##value->int_of_string) {
-        | exception _ => 1->PositiveInt.make->Option.getWithDefault(1)
-        | x => x->PositiveInt.make->Option.getWithDefault(1)
+      let size =
+        switch (
+          elements##height##value->int_of_string,
+          elements##width##value->int_of_string,
+        ) {
+        | exception _ => Items.defaultItem.size
+        | (h, w) => (
+            h->PositiveInt.make->Option.getWithDefault(dH),
+            w->PositiveInt.make->Option.getWithDefault(dW),
+          )
         };
-
-      let w =
-        switch (elements##width##value->int_of_string) {
-        | exception _ => 1->PositiveInt.make->Option.getWithDefault(1)
-        | x => x->PositiveInt.make->Option.getWithDefault(1)
-        };
-
-      let size = Size.make(~h, ~w);
 
       let quality =
         switch (elements##quality##value) {
@@ -92,10 +101,11 @@ let make = _children => {
           ~quality,
           ~kind=Weapon(OneHanded(Sword)),
           ~size,
-          ~image,
+          ~image=self.state.selectedItemImage,
         );
 
       send(AddItem(item));
+      send(ResetForm);
 
       form##reset();
     };
@@ -126,13 +136,14 @@ let make = _children => {
           </select>
         </label>
         <label className=Styles.label>
-          "Image URL"->text
-          <select name="image">
-            {Items.preloadImages
-             ->List.toArray
-             ->Array.map(id => <option key=id value=id> id->text </option>)
-             ->ReasonReact.array}
-          </select>
+          "Image"->text
+          <div className=Styles.imagePickerContainer>
+            <ItemImagePicker
+              onChange=handleNewImage
+              value={Some(self.state.selectedItemImage)}
+              itemImages={Items.preloadImages->List.map(ItemImage.make)}
+            />
+          </div>
         </label>
         <label className=Styles.label>
           "Height"->text

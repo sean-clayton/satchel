@@ -96,7 +96,7 @@ let defaultItem = {
   id: ItemId.make("__DEFAULT_ITEM_ID__"),
   name: "__DEFAULT_ITEM__",
   description: "__DEFAULT_ITEM__",
-  image: ItemImage.make(""),
+  image: ItemImage.make("p43_retrosword_1h_001_demonhunter_male"),
   kind: DefaultItem,
   quality: Common,
   size: (1, 1),
