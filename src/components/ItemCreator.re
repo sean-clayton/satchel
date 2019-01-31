@@ -60,12 +60,14 @@ let make = _children => {
 
       let name =
         switch (elements##name##value->Js.Undefined.toOption) {
+        | exception _ => defaultItem.name
         | Some(string) => string
         | None => Items.defaultItem.name
         };
 
       let description =
         switch (elements##description##value->Js.Undefined.toOption) {
+        | exception _ => defaultItem.description
         | Some(string) => string
         | None => Items.defaultItem.description
         };
