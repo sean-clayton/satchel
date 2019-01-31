@@ -39,7 +39,7 @@ let make = _ => {
   render: _self => {
     let container =
       ItemDb.predefinedItems
-      ->List.zip([(0, 0), (0, 1), (2, 0), (4, 0), (6, 0)])
+      ->List.zip([(0, 0), (0, 1), (0, 3), (1, 0), (1, 2), (2, 0)])
       ->List.reduce(ItemDb.backpack, (container, (item, coords)) =>
           tryToAddItemToContainer(~item, ~container, ~coords)
           ->Result.getWithDefault(container)

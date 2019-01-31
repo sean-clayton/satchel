@@ -1,4 +1,4 @@
-open Items.Rarity;
+open Items.Quality;
 open Styles.Functions;
 
 module Colors = {
@@ -6,17 +6,17 @@ module Colors = {
     | Black
     | White;
 
-  let rarityRgbTuple = rarity =>
-    switch (rarity) {
+  let qualityRgbTuple = quality =>
+    switch (quality) {
     | Common => (162, 160, 161)
-    | Uncommon => (9, 253, 3)
-    | Rare => (0, 119, 255)
-    | Epic => (255, 28, 174)
-    | Legendary => (255, 224, 2)
+    | Uncommon => (15, 230, 32)
+    | Rare => (60, 190, 255)
+    | Legendary => (255, 192, 2)
+    | Mythical => (255, 70, 255)
     };
 
-  let rarityAlpha = (rarity, alpha) =>
-    rarityRgbTuple(rarity)->rgbToRgba(alpha);
+  let qualityAlpha = (quality, alpha) =>
+    qualityRgbTuple(quality)->rgbToRgba(alpha);
 
-  let rarity = rarity => rarityAlpha(rarity, 1.);
+  let quality = quality => qualityAlpha(quality, 1.);
 };

@@ -56,21 +56,21 @@ type container =
   | Backpack
   | Box;
 
-module Rarity = {
+module Quality = {
   type t =
     | Common
     | Uncommon
     | Rare
-    | Epic
-    | Legendary;
+    | Legendary
+    | Mythical;
 
-  let toString = rarity =>
-    switch (rarity) {
+  let toString = quality =>
+    switch (quality) {
     | Common => "Common"
     | Uncommon => "Uncommon"
     | Rare => "Rare"
-    | Epic => "Epic"
     | Legendary => "Legendary"
+    | Mythical => "Mythical"
     };
 };
 
@@ -88,7 +88,7 @@ type item = {
   description: string,
   image: ItemImage.t,
   kind,
-  rarity: Rarity.t,
+  quality: Quality.t,
   size: Size.t,
 };
 
@@ -98,29 +98,29 @@ let defaultItem = {
   description: "__DEFAULT_ITEM__",
   image: ItemImage.make(""),
   kind: DefaultItem,
-  rarity: Common,
+  quality: Common,
   size: (1, 1),
 };
 
-let createItem = (~name, ~description, ~image, ~rarity, ~size, ~kind) => {
+let createItem = (~name, ~description, ~image, ~quality, ~size, ~kind) => {
   id: createItemId(),
   kind,
   name,
   description,
   image,
-  rarity,
+  quality,
   size,
 };
 
 let createItemFromScratch =
-    (~name, ~description, ~image, ~rarity, ~sizeH, ~sizeW, ~kind) => {
+    (~name, ~description, ~image, ~quality, ~sizeH, ~sizeW, ~kind) => {
   switch (PositiveInt.make(sizeH), PositiveInt.make(sizeW)) {
   | (Some(h), Some(w)) => {
       id: createItemId(),
       name,
       description,
       image,
-      rarity,
+      quality,
       size: Size.make(~h, ~w),
       kind,
     }

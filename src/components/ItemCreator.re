@@ -75,21 +75,21 @@ let make = _children => {
 
       let size = Size.make(~h, ~w);
 
-      let rarity =
-        switch (elements##rarity##value) {
-        | "common" => Rarity.Common
-        | "uncommon" => Rarity.Uncommon
-        | "rare" => Rarity.Rare
-        | "epic" => Rarity.Epic
-        | "legendary" => Rarity.Legendary
-        | _ => Rarity.Common
+      let quality =
+        switch (elements##quality##value) {
+        | "common" => Quality.Common
+        | "uncommon" => Quality.Uncommon
+        | "rare" => Quality.Rare
+        | "legendary" => Quality.Legendary
+        | "mythical" => Quality.Mythical
+        | _ => Quality.Common
         };
 
       let item =
         createItem(
           ~name,
           ~description,
-          ~rarity,
+          ~quality,
           ~kind=Weapon(OneHanded(Sword)),
           ~size,
           ~image,
@@ -116,13 +116,13 @@ let make = _children => {
           />
         </label>
         <label className=Styles.label>
-          "Rarity"->text
-          <select name="rarity">
+          "Quality"->text
+          <select name="quality">
             <option value="common"> "Common"->text </option>
             <option value="uncommon"> "Uncommon"->text </option>
             <option value="rare"> "Rare"->text </option>
-            <option value="epic"> "Epic"->text </option>
             <option value="legendary"> "Legendary"->text </option>
+            <option value="mythical"> "Mythical"->text </option>
           </select>
         </label>
         <label className=Styles.label>
