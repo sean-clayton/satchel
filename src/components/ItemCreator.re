@@ -20,9 +20,19 @@ module Styles = {
     ]);
 
   let imagePickerContainer =
-    style([marginLeft(1.->rem), flex(2), overflowY(scroll)]);
+    style([
+      marginLeft(1.->rem),
+      flex(2),
+      overflowY(scroll),
+      unsafe("-webkit-overflow-scrolling", "touch"),
+    ]);
 
-  let inventoryContainer = style([flex(2), overflowY(scroll)]);
+  let inventoryContainer =
+    style([
+      flex(2),
+      overflowY(scroll),
+      unsafe("-webkit-overflow-scrolling", "touch"),
+    ]);
 };
 
 type state = {
