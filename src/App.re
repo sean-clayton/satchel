@@ -15,13 +15,7 @@ module Styles = {
 
   let content = style([display(flexBox), flex(1)]);
 
-  let form =
-    style([
-      flex(1),
-      display(flexBox),
-      flexDirection(column),
-      padding(1.->rem),
-    ]);
+  let form = style([flex(1), display(flexBox), flexDirection(column)]);
 };
 
 let component = ReasonReact.statelessComponent("App");

@@ -7,9 +7,15 @@ module Styles = {
   let formWrapper =
     style([flex(1), display(flexBox), flexDirection(column)]);
 
-  let form = style([flex(1), display(flexBox), justifyContent(flexStart)]);
+  let form =
+    style([
+      display(grid),
+      unsafe("grid-template-areas", {|"form item-images items"|}),
+      gridTemplateColumns([1.->fr, 2.->fr, 2.->fr]),
+      height(100.->vh),
+    ]);
 
-  let formInputs = style([flex(1)]);
+  let formInputs = style([padding(1.->rem)]);
 
   let label =
     style([
