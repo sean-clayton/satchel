@@ -29,11 +29,15 @@ let component = ReasonReact.statelessComponent("App");
 let make = _ => {
   ...component,
   render: _self => {
+    let itemIds =
+      switch (Environment.nodeEnv) {
+      | "production" => ItemDb.preloadItemIds
+      | _ => ItemDb.preloadItemIds->Array.slice(~offset=0, ~len=50)
+      };
     <main className=Styles.wrapper>
       <AssetLoader
         images={
-          ItemDb.preloadItemIds
-          ->Array.slice(~offset=0, ~len=50)
+          itemIds
           ->Array.map(Items.ItemImage.make)
           ->Array.map(Items.ItemImage.toString)
         }>
