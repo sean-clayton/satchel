@@ -24,6 +24,7 @@ module Styles = {
     let (o1, o2, o3, o4, o5, o6, o7, pct1) =
       switch (item.quality) {
       | Junk => (0.05, 0.05, 0., 0.05, 0.15, 0.25, 0.4, 0)
+      | QuestRelated
       | Legendary => (0.5, 0.15, 0.25, 0.5, 0.5, 0.5, 1., 50)
       | _ => (0.1, 0.05, 0., 0.15, 0.25, 0.5, 1., 25)
       };

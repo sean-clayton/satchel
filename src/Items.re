@@ -60,6 +60,7 @@ type container =
 
 module Quality = {
   type t =
+    | QuestRelated
     | Junk
     | Common
     | Uncommon
@@ -70,6 +71,7 @@ module Quality = {
   let toString = quality =>
     switch (quality) {
     | Junk => "Junk"
+    | QuestRelated => "Quest-Related"
     | Common => "Common"
     | Uncommon => "Uncommon"
     | Rare => "Rare"
@@ -103,7 +105,7 @@ let kindToString = kind =>
   | Readable(Note) => "Note"
   | Container(Backpack) => "Backpack"
   | Container(Box) => "Box"
-  | Misc => "Miscellaneous"
+  | Misc => "Miscellaneous Item"
   | _ => "Item"
   };
 
