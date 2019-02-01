@@ -77,8 +77,14 @@ let make = (~images=[], ~sounds=[], children) => {
 
     let progress = progressf *. 100.0;
 
+    let pct =
+      switch (progress) {
+      | x when x < 5.0 => 5.0
+      | x => x
+      };
+
     let progressStyle =
-      ReactDOMRe.Style.make(~width=progress->Js.Float.toString ++ "%", ());
+      ReactDOMRe.Style.make(~width=pct->Js.Float.toString ++ "%", ());
 
     switch (self.state.numLoaded === numTotalAssets) {
     | true => children
