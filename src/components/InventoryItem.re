@@ -21,11 +21,11 @@ module Styles = {
 
   let imageContainer = item => {
     let (h, w) = item.size;
-    let (o1, o2, o3, o4, o5, pct1) =
+    let (o1, o2, o3, o4, o5, o6, o7, pct1) =
       switch (item.quality) {
-      | Legendary
-      | Mythical => (0.5, 0.15, 0.25, 0.5, 0.5, 50)
-      | _ => (0.1, 0.05, 0., 0.15, 0.25, 25)
+      | Common => (0.05, 0.05, 0., 0.05, 0.15, 0.25, 0.4, 0)
+      | Legendary => (0.5, 0.15, 0.25, 0.5, 0.5, 0.5, 1., 50)
+      | _ => (0.1, 0.05, 0., 0.15, 0.25, 0.5, 1., 25)
       };
 
     style([
@@ -46,7 +46,7 @@ module Styles = {
         boxShadow(
           ~inset=true,
           ~spread=2->px,
-          Theme.Colors.qualityAlpha(item.quality, 0.5),
+          Theme.Colors.qualityAlpha(item.quality, o6),
         ),
       ]),
       hover([
@@ -56,7 +56,7 @@ module Styles = {
           boxShadow(
             ~inset=true,
             ~spread=2->px,
-            Theme.Colors.quality(item.quality),
+            Theme.Colors.qualityAlpha(item.quality, o7),
           ),
           boxShadow(
             ~inset=true,

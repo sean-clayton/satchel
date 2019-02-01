@@ -3,14 +3,19 @@ open Utils;
 module Styles = {
   open Css;
 
+  let container =
+    style([
+      display(grid),
+      unsafe("grid-template-columns", "repeat(auto-fit, minmax(128px, 1fr))"),
+      unsafe("grid-auto-rows", "128px"),
+    ]);
+
   let imageWrapper =
     style([
-      display(inlineFlex),
+      display(flexBox),
       justifyContent(center),
       alignItems(center),
       position(relative),
-      height(128->px),
-      width(128->px),
     ]);
 
   let selectedImage = style([backgroundColor(rgba(0, 75, 255, 0.666))]);
@@ -22,19 +27,17 @@ let component = ReasonReact.statelessComponent("ItemImagePicker");
 
 let make =
     (
-      ~itemImages: list(Items.ItemImage.t),
-      ~value=itemImages->List.head,
+      ~itemImages: array(Items.ItemImage.t),
+      ~value: Items.ItemImage.t,
       ~onChange,
       _children,
     ) => {
   ...component,
   render: _self => {
     let handleSelectItem = onChange;
-    let value = value->Option.getWithDefault(Items.defaultItem.image);
 
-    <div>
+    <div className=Styles.container>
       {itemImages
-       ->List.toArray
        ->Array.map(itemImage => {
            let activeClass =
              switch (value == itemImage) {

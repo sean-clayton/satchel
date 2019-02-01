@@ -6,15 +6,12 @@ module Styles = {
 
   let wrapper =
     style([
+      maxHeight(100.0->vh),
       display(flexBox),
       flex(1),
-      padding(1.0->rem),
-      backgroundImage(url("/assets/bg-repeat.jpg")),
-      backgroundAttachment(fixed),
-      unsafe("background-position", "center center"),
-      unsafe("background-repeat", "repeat-y"),
       backgroundColor("091B1D"->hex),
       color(white),
+      maxWidth(100.->vw),
     ]);
 
   let content =
@@ -24,12 +21,30 @@ module Styles = {
       unsafe("grid-template-areas", {|
         "inventory form"
       |}),
-      gridTemplateColumns([1.0->fr, 1.0->fr]),
+      gridTemplateColumns([1.0->fr, 2.0->fr]),
+      gridTemplateRows([100.->vh]),
     ]);
 
-  let inventory = style([unsafe("grid-area", "inventory")]);
+  let inventoryContainer =
+    style([
+      unsafe("grid-area", "inventory"),
+      display(flexBox),
+      flexDirection(column),
+      backgroundColor(rgba(0, 0, 0, 0.25)),
+      height(100.->vh),
+    ]);
 
-  let form = style([unsafe("grid-area", "form")]);
+  let inventoryTitle = style([padding(1.->rem)]);
+
+  let inventory = style([flex(1), overflowY(scroll), padding(1.->rem)]);
+
+  let form =
+    style([
+      unsafe("grid-area", "form"),
+      display(flexBox),
+      flexDirection(column),
+      padding(1.->rem),
+    ]);
 };
 
 let component = ReasonReact.statelessComponent("App");
@@ -50,14 +65,15 @@ let make = _ => {
     <main className=Styles.wrapper>
       <AssetLoader
         images={
-          Items.preloadImages
+          ItemDb.preloadItemIds
+          ->List.fromArray
           ->List.map(Items.ItemImage.make)
           ->List.map(Items.ItemImage.toString)
         }>
         ...<div className=Styles.content>
-             <div className=Styles.inventory>
-               <h1> "Inventory:"->text </h1>
-               <InventoryList items />
+             <div className=Styles.inventoryContainer>
+               <h1 className=Styles.inventoryTitle> "Inventory:"->text </h1>
+               <div className=Styles.inventory> <InventoryList items /> </div>
              </div>
              <div className=Styles.form> <ItemCreator /> </div>
            </div>

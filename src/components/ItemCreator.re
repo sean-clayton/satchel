@@ -4,7 +4,12 @@ open Items;
 module Styles = {
   open Css;
 
-  let form = style([display(flexBox), flexDirection(column)]);
+  let formWrapper =
+    style([flex(1), display(flexBox), flexDirection(column)]);
+
+  let form = style([flex(1), display(flexBox), justifyContent(flexStart)]);
+
+  let formInputs = style([flex(1)]);
 
   let label =
     style([
@@ -14,10 +19,10 @@ module Styles = {
       marginBottom(1.0->rem),
     ]);
 
-  let description = style([unsafe("resize", "vertical")]);
-
   let imagePickerContainer =
-    style([maxHeight((128 * 4)->px), overflowY(scroll)]);
+    style([marginLeft(1.->rem), flex(2), overflowY(scroll)]);
+
+  let inventoryContainer = style([flex(1), overflowY(scroll)]);
 };
 
 type state = {
@@ -91,8 +96,8 @@ let make = _children => {
         | "common" => Quality.Common
         | "uncommon" => Quality.Uncommon
         | "rare" => Quality.Rare
-        | "legendary" => Quality.Legendary
         | "mythical" => Quality.Mythical
+        | "legendary" => Quality.Legendary
         | _ => Quality.Common
         };
 
@@ -111,67 +116,70 @@ let make = _children => {
 
       form##reset();
     };
-    <div>
+    <div className=Styles.formWrapper>
       <form onSubmit={self.handle(handleSubmit)} className=Styles.form>
-        <label className=Styles.label>
-          "Name"->text
-          <input name="name" id="name" required=true placeholder="Name" />
-        </label>
-        <label className=Styles.label>
-          "Description"->text
-          <textarea
-            className=Styles.description
-            name="description"
-            id="description"
-            required=true
-            placeholder="Description"
-          />
-        </label>
-        <label className=Styles.label>
-          "Quality"->text
-          <select name="quality">
-            <option value="common"> "Common"->text </option>
-            <option value="uncommon"> "Uncommon"->text </option>
-            <option value="rare"> "Rare"->text </option>
-            <option value="legendary"> "Legendary"->text </option>
-            <option value="mythical"> "Mythical"->text </option>
-          </select>
-        </label>
-        <label className=Styles.label>
-          "Image"->text
-          <div className=Styles.imagePickerContainer>
+        <div className=Styles.formInputs>
+          <label className=Styles.label>
+            "Name"->text
+            <input name="name" id="name" required=true placeholder="Name" />
+          </label>
+          <label className=Styles.label>
+            "Description"->text
+            <input
+              name="description"
+              id="description"
+              required=true
+              placeholder="Description"
+            />
+          </label>
+          <label className=Styles.label>
+            "Quality"->text
+            <select name="quality">
+              <option value="common"> "Common"->text </option>
+              <option value="uncommon"> "Uncommon"->text </option>
+              <option value="rare"> "Rare"->text </option>
+              <option value="mythical"> "Mythical"->text </option>
+              <option value="legendary"> "Legendary"->text </option>
+            </select>
+          </label>
+          <label className=Styles.label>
+            "Height"->text
+            <input
+              name="height"
+              id="height"
+              required=true
+              type_="number"
+              min=1
+              defaultValue="1"
+            />
+          </label>
+          <label className=Styles.label>
+            "Width"->text
+            <input
+              name="width"
+              id="width"
+              required=true
+              type_="number"
+              min=1
+              defaultValue="1"
+            />
+          </label>
+          <button> "Create Item"->text </button>
+        </div>
+        <div className=Styles.imagePickerContainer>
+          <label className=Styles.label>
+            "Image"->text
             <ItemImagePicker
               onChange=handleNewImage
-              value={Some(self.state.selectedItemImage)}
-              itemImages={Items.preloadImages->List.map(ItemImage.make)}
+              value={self.state.selectedItemImage}
+              itemImages={ItemDb.preloadItemIds->Array.map(ItemImage.make)}
             />
-          </div>
-        </label>
-        <label className=Styles.label>
-          "Height"->text
-          <input
-            name="height"
-            id="height"
-            required=true
-            type_="number"
-            min=1
-            defaultValue="1"
-          />
-        </label>
-        <label className=Styles.label>
-          "Width"->text
-          <input
-            name="width"
-            id="width"
-            required=true
-            type_="number"
-            min=1
-            defaultValue="1"
-          />
-        </label>
-        <button> "Create Item"->text </button>
+          </label>
+        </div>
+        <div className=Styles.inventoryContainer>
+          <InventoryList items={self.state.items} />
+        </div>
       </form>
-      <InventoryList items={self.state.items} />
     </div>;
   },
 };
