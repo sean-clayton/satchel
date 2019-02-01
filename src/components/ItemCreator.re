@@ -230,7 +230,7 @@ let make = _children => {
             <ItemImagePicker
               onChange=handleNewImage
               value={self.state.selectedItemImage}
-              itemImages={ItemDb.preloadItemIds->Array.map(ItemImage.make)}
+              itemImages={ItemIds.all->Array.map(ItemImage.make)}
             />
           </label>
         </div>

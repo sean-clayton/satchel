@@ -31,8 +31,8 @@ let make = _ => {
   render: _self => {
     let itemIds =
       switch (Environment.nodeEnv) {
-      | "production" => ItemDb.preloadItemIds
-      | _ => ItemDb.preloadItemIds->Array.slice(~offset=0, ~len=50)
+      | "production" => ItemIds.all
+      | _ => ItemIds.all->Array.slice(~offset=0, ~len=50)
       };
     <main className=Styles.wrapper>
       <AssetLoader
