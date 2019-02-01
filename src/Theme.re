@@ -8,7 +8,8 @@ module Colors = {
 
   let qualityRgbTuple = quality =>
     switch (quality) {
-    | Common => (162, 160, 161)
+    | Junk => (160, 160, 160)
+    | Common => (241, 225, 196)
     | Uncommon => (15, 230, 32)
     | Rare => (60, 190, 255)
     | Mythical => (255, 70, 255)

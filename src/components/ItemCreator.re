@@ -93,12 +93,13 @@ let make = _children => {
 
       let quality =
         switch (elements##quality##value) {
+        | "junk" => Quality.Junk
         | "common" => Quality.Common
         | "uncommon" => Quality.Uncommon
         | "rare" => Quality.Rare
         | "mythical" => Quality.Mythical
         | "legendary" => Quality.Legendary
-        | _ => Quality.Common
+        | _ => Quality.Junk
         };
 
       let kind =
@@ -117,6 +118,7 @@ let make = _children => {
         | "note" => Readable(Note)
         | "backpack" => Container(Backpack)
         | "box" => Container(Box)
+        | "misc" => Misc
         | _ => DefaultItem
         };
 
@@ -154,6 +156,7 @@ let make = _children => {
           <label className=Styles.label>
             "Quality"->text
             <select name="quality">
+              <option value="junk"> "Junk"->text </option>
               <option value="common"> "Common"->text </option>
               <option value="uncommon"> "Uncommon"->text </option>
               <option value="rare"> "Rare"->text </option>
@@ -182,6 +185,7 @@ let make = _children => {
               <option value="note"> "Note"->text </option>
               <option value="backpack"> "Backpack"->text </option>
               <option value="box"> "Box"->text </option>
+              <option value="misc"> "Miscellaneous"->text </option>
             </select>
           </label>
           <label className=Styles.label>
