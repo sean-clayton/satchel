@@ -66,9 +66,9 @@ let make = _ => {
       <AssetLoader
         images={
           ItemDb.preloadItemIds
-          ->List.fromArray
-          ->List.map(Items.ItemImage.make)
-          ->List.map(Items.ItemImage.toString)
+          ->Array.slice(~offset=0, ~len=50)
+          ->Array.map(Items.ItemImage.make)
+          ->Array.map(Items.ItemImage.toString)
         }>
         ...<div className=Styles.content>
              <div className=Styles.inventoryContainer>

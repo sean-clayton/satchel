@@ -84,6 +84,25 @@ type kind =
   | Container(container)
   | DefaultItem;
 
+let kindToString = kind =>
+  switch (kind) {
+  | Weapon(OneHanded(Sword)) => "One-Handed Sword"
+  | Weapon(TwoHanded(Sword)) => "Two-Handed Sword"
+  | Weapon(OneHanded(ShortSword)) => "Short Sword"
+  | Weapon(OneHanded(Dagger)) => "Dagger"
+  | Apparel(Chestpiece) => "Chestpiece"
+  | Apparel(Boots) => "Boots"
+  | Apparel(Helmet) => "Helmet"
+  | Apparel(Gloves) => "Gloves"
+  | Apparel(Ring) => "Ring"
+  | Consumable(Drink) => "Drink"
+  | Readable(Book) => "Book"
+  | Readable(Note) => "Note"
+  | Container(Backpack) => "Backpack"
+  | Container(Box) => "Box"
+  | _ => "Item"
+  };
+
 type item = {
   id: ItemId.t,
   name: string,

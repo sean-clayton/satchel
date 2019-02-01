@@ -80,9 +80,11 @@ let component = ReasonReact.statelessComponent("InventoryItem");
 let make = (~item, _children) => {
   ...component,
   render: _self => {
+    let qualityS = item.quality->Quality.toString;
+    let kindS = item.kind->kindToString;
     <div>
       <p className={Styles.title(item.quality)}> item.name->text </p>
-      <p> {item.quality->Quality.toString->text} </p>
+      <p> {j|$qualityS $kindS|j}->text </p>
       <p className=Styles.description> <em> item.description->text </em> </p>
       <div
         className=Styles.(

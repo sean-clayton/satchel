@@ -101,12 +101,31 @@ let make = _children => {
         | _ => Quality.Common
         };
 
+      let kind =
+        switch (elements##kind##value) {
+        | "one_handed_sword" => Weapon(OneHanded(Sword))
+        | "two_handed_sword" => Weapon(TwoHanded(Sword))
+        | "short_sword" => Weapon(OneHanded(ShortSword))
+        | "dagger" => Weapon(OneHanded(Dagger))
+        | "chestpiece" => Apparel(Chestpiece)
+        | "boots" => Apparel(Boots)
+        | "helmet" => Apparel(Helmet)
+        | "gloves" => Apparel(Gloves)
+        | "ring" => Apparel(Ring)
+        | "drink" => Consumable(Drink)
+        | "book" => Readable(Book)
+        | "note" => Readable(Note)
+        | "backpack" => Container(Backpack)
+        | "box" => Container(Box)
+        | _ => DefaultItem
+        };
+
       let item =
         createItem(
           ~name,
           ~description,
           ~quality,
-          ~kind=Weapon(OneHanded(Sword)),
+          ~kind,
           ~size,
           ~image=self.state.selectedItemImage,
         );
@@ -140,6 +159,29 @@ let make = _children => {
               <option value="rare"> "Rare"->text </option>
               <option value="mythical"> "Mythical"->text </option>
               <option value="legendary"> "Legendary"->text </option>
+            </select>
+          </label>
+          <label className=Styles.label>
+            "Kind"->text
+            <select name="kind">
+              <option value="one_handed_sword">
+                "One-Handed Sword"->text
+              </option>
+              <option value="two_handed_sword">
+                "Two-Handed Sword"->text
+              </option>
+              <option value="short_sword"> "Short Sword"->text </option>
+              <option value="dagger"> "Dagger"->text </option>
+              <option value="chestpiece"> "Chestpiece"->text </option>
+              <option value="boots"> "Boots"->text </option>
+              <option value="helmet"> "Helmet"->text </option>
+              <option value="gloves"> "Gloves"->text </option>
+              <option value="ring"> "Ring"->text </option>
+              <option value="drink"> "Drink"->text </option>
+              <option value="book"> "Book"->text </option>
+              <option value="note"> "Note"->text </option>
+              <option value="backpack"> "Backpack"->text </option>
+              <option value="box"> "Box"->text </option>
             </select>
           </label>
           <label className=Styles.label>

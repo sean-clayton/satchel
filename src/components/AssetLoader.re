@@ -54,7 +54,7 @@ type actions =
 
 let component = ReasonReact.reducerComponent("ImageLoader");
 
-let make = (~images=[], ~sounds=[], children) => {
+let make = (~images=[||], ~sounds=[||], children) => {
   ...component,
   initialState: () => {numLoaded: 0},
   reducer: (action, state) => {
@@ -70,7 +70,7 @@ let make = (~images=[], ~sounds=[], children) => {
   },
   render: self => {
     let assetLoadComplete = _ => self.send(LoadedAsset);
-    let numTotalAssets = List.concat(images, sounds)->List.length;
+    let numTotalAssets = Array.concat(images, sounds)->Array.length;
 
     let progressf =
       self.state.numLoaded->float_of_int /. numTotalAssets->float_of_int;
@@ -96,13 +96,11 @@ let make = (~images=[], ~sounds=[], children) => {
           <span style=progressStyle className=Styles.loader />
         </div>
         {sounds
-         ->List.toArray
          ->Array.map(sound =>
              <audio key=sound src=sound onCanPlayThrough=assetLoadComplete />
            )
          ->ReasonReact.array}
         {images
-         ->List.toArray
          ->Array.map(image =>
              <img
                className=Styles.hiddenAsset
