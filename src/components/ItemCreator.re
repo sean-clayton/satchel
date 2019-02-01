@@ -22,7 +22,7 @@ module Styles = {
   let imagePickerContainer =
     style([marginLeft(1.->rem), flex(2), overflowY(scroll)]);
 
-  let inventoryContainer = style([flex(1), overflowY(scroll)]);
+  let inventoryContainer = style([flex(2), overflowY(scroll)]);
 };
 
 type state = {
