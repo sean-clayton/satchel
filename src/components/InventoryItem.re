@@ -1,18 +1,11 @@
-open Utils;
 open Items;
 
 module Styles = {
   open Css;
-  open Theme;
-
-  let title = quality =>
-    style([color(Colors.quality(quality)), fontSize(24->px)]);
-
-  let description = style([]);
 
   let imageContainerBase =
     style([
-      display(flexBox),
+      display(inlineFlex),
       justifyContent(center),
       transitionTimingFunction(easeInOut),
       transitionDuration(80),
@@ -81,12 +74,7 @@ let component = ReasonReact.statelessComponent("InventoryItem");
 let make = (~item, _children) => {
   ...component,
   render: _self => {
-    let qualityS = item.quality->Quality.toString;
-    let kindS = item.kind->kindToString;
     <div>
-      <p className={Styles.title(item.quality)}> item.name->text </p>
-      <p> {j|$qualityS $kindS|j}->text </p>
-      <p className=Styles.description> <em> item.description->text </em> </p>
       <div
         className=Styles.(
           Css.merge([imageContainerBase, imageContainer(item)])
@@ -97,6 +85,7 @@ let make = (~item, _children) => {
           alt={item.description}
         />
       </div>
+      <TooltipPortal> ...<InventoryItemInfoTooltip item /> </TooltipPortal>
     </div>;
   },
 };

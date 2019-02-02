@@ -8,8 +8,6 @@ module Styles = {
       maxHeight(100.0->vh),
       display(flexBox),
       flex(1),
-      backgroundColor("091B1D"->hex),
-      color(white),
       maxWidth(100.->vw),
     ]);
 

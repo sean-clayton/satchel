@@ -56,7 +56,20 @@ let component = ReasonReact.reducerComponent("ItemCreator");
 
 let make = _children => {
   ...component,
-  initialState: () => {items: [], selectedItemImage: defaultItem.image},
+  initialState: () => {
+    items: [
+      createItemFromScratch(
+        ~name="Test Item!",
+        ~description="Test Description",
+        ~image=ItemImage.make("primordialkey_demonhunter_male"),
+        ~kind=DefaultItem,
+        ~quality=Quality.Legendary,
+        ~sizeH=2,
+        ~sizeW=1,
+      ),
+    ],
+    selectedItemImage: defaultItem.image,
+  },
   reducer: (action, state) => {
     switch (action) {
     | AddItem(item) =>
