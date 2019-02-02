@@ -11,20 +11,25 @@ module Styles = {
   let description = style([]);
 
   let wrapper =
-    style([position(absolute), backgroundColor(black), padding(1.->rem)]);
+    style([
+      pointerEvents(none),
+      position(absolute),
+      backgroundColor(black),
+      padding(1.->rem),
+      top(0->px),
+      left(0->px),
+    ]);
 };
 
 let component = ReasonReact.statelessComponent("InventoryItemInfoTooltip");
 
-let make = (~item, ~x=0, ~y=0, _children) => {
+let make = (~item, ~x, ~y, _children) => {
   ...component,
   render: _self => {
+    let xS = y->string_of_int ++ "px";
+    let yS = x->string_of_int ++ "px";
     let style =
-      ReactDOMRe.Style.make(
-        ~top=y->string_of_int,
-        ~left=x->string_of_int,
-        (),
-      );
+      ReactDOMRe.Style.make(~transform={j|translate($yS, $xS)|j}, ());
     let qualityS = item.quality->Quality.toString;
     let kindS = item.kind->kindToString;
 

@@ -69,13 +69,51 @@ module Styles = {
   let image = style([alignSelf(center)]);
 };
 
-let component = ReasonReact.statelessComponent("InventoryItem");
+type state = {
+  showTooltip: bool,
+  tooltipX: int,
+  tooltipY: int,
+};
+
+type actions =
+  | ShowTooltip
+  | HideTooltip
+  | MoveTooltip(int, int);
+
+let component = ReasonReact.reducerComponent("InventoryItem");
 
 let make = (~item, _children) => {
   ...component,
-  render: _self => {
-    <div>
+  initialState: () => {showTooltip: false, tooltipX: 0, tooltipY: 0},
+  reducer: (action, state) =>
+    switch (action) {
+    | ShowTooltip => ReasonReact.Update({...state, showTooltip: true})
+    | HideTooltip =>
+      ReasonReact.Update({tooltipX: 0, tooltipY: 0, showTooltip: false})
+    | MoveTooltip(tooltipX, tooltipY) =>
+      ReasonReact.Update({...state, tooltipX, tooltipY})
+    },
+  render: self => {
+    let (x, y) = (self.state.tooltipX, self.state.tooltipY);
+    let onMouseEnter = e => {
+      e->ReactEvent.Mouse.preventDefault;
+      self.send(ShowTooltip);
+    };
+    let onMouseLeave = e => {
+      e->ReactEvent.Mouse.preventDefault;
+      self.send(HideTooltip);
+    };
+    let onMouseMove = e => {
+      e->ReactEvent.Mouse.preventDefault;
+      let x = e->ReactEvent.Mouse.clientX;
+      let y = e->ReactEvent.Mouse.clientY;
+      self.send(MoveTooltip(x, y));
+    };
+    <>
       <div
+        onMouseEnter
+        onMouseLeave
+        onMouseMove
         className=Styles.(
           Css.merge([imageContainerBase, imageContainer(item)])
         )>
@@ -85,7 +123,13 @@ let make = (~item, _children) => {
           alt={item.description}
         />
       </div>
-      <TooltipPortal> ...<InventoryItemInfoTooltip item /> </TooltipPortal>
-    </div>;
+      {switch (self.state.showTooltip) {
+       | true =>
+         <TooltipPortal>
+           ...<InventoryItemInfoTooltip x y item />
+         </TooltipPortal>
+       | _ => ReasonReact.null
+       }}
+    </>;
   },
 };
