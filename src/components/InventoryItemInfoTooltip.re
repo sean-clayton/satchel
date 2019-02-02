@@ -23,6 +23,17 @@ module Styles = {
 
 let component = ReasonReact.statelessComponent("InventoryItemInfoTooltip");
 
+/**
+  In order dynamically position the tooltip relative to the screen borders and mouse,
+  we need to capture the the following things in didMount:
+
+  - Element height/width
+  - Screen height/width (Maybe do observer on screen dimensions if screen is resized?)
+
+  We already have x and y of the mouse from props and we can just
+  recalculate everything in render
+ */
+
 let make = (~item, ~x, ~y, _children) => {
   ...component,
   render: _self => {
